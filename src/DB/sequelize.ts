@@ -1,4 +1,5 @@
 import { DB, DB_USERNAME, DB_PASSWORD, DB_HOST } from "../Config";
+import { initUserModel } from "./Models/User";
 
 const Sequelize = require('sequelize');
 export const sequelize = new Sequelize(DB, DB_USERNAME, DB_PASSWORD, {
@@ -14,3 +15,4 @@ export const sequelize = new Sequelize(DB, DB_USERNAME, DB_PASSWORD, {
 });
 
 sequelize.Sequelize = Sequelize;
+sequelize.User = initUserModel(sequelize);
