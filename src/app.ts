@@ -1,17 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import { PORT } from "./Config";
-import { sequelize } from "./DB/sequelize";
-
-//Connect to DB
-sequelize
-    .authenticate()
-    .then(() => {
-        console.log('Connection has been established successfully.');
-    })
-    .catch((err: any) => {
-        console.error('Unable to connect to the database:', err);
-    });
+import { userRouter } from "./Routes/User";
 
 // Create Express server
 const app = express();
@@ -28,5 +18,7 @@ app.get("/", (req, res, next) => {
     res.send("Hello");
     next()
 });
+
+app.use('/', userRouter)
 
 export default app;

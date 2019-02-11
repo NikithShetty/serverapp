@@ -1,6 +1,6 @@
 import errorHandler from "errorhandler";
-
 import app from "./app";
+import { db } from "./DB/sequelize";
 
 /**
  * Error Handler. Provides full stack - remove for production
@@ -8,15 +8,30 @@ import app from "./app";
 app.use(errorHandler());
 
 /**
+ * Initialize the services and 
  * Start Express server.
  */
-const server = app.listen(app.get("port"), () => {
-    console.log(
-        "  App is running at http://localhost:%d in %s mode",
-        app.get("port"),
-        app.get("env")
-    );
-    console.log("  Press CTRL-C to stop\n");
-});
+const startServer = () => {
+    app.listen(app.get("port"), () => {
+        console.log(
+            "  App is running at http://localhost:%d in %s mode",
+            app.get("port"),
+            app.get("env")
+        );
+        console.log("  Press CTRL-C to stop\n");
+    });
+}
 
-export default server;
+const preInit = async () => {
+    await db.sequelize.authenticate()
+    console.log('Connection to DB successful.')
+    await db.sequelize.sync()
+    console.log("DB sync successful")
+}
+
+preInit()
+    .then(startServer)
+    .catch((err: any) => {
+        console.error('Error occured in Preinit: ', err);
+        process.exit(1)
+    });

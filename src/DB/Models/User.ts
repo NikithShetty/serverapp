@@ -1,7 +1,4 @@
-import { Sequelize } from "sequelize";
-
-export function initUserModel (sequelize:Sequelize) {
-  const Sequelize = sequelize.Sequelize;
+module.exports = (sequelize:any, Sequelize:any) => {
   const User = sequelize.define('User', {
     id: {
       type: Sequelize.UUID
@@ -16,16 +13,7 @@ export function initUserModel (sequelize:Sequelize) {
       allowNull: false
     }
   });
-
-  User.sync()
-    .then(() => { 
-      console.log("User model synced") ;
-      return User;
-    })
-    .catch(() => {
-      console.log("User model sync failed. EXiting...");
-      process.exit(0)
-    });
+  return User;
 }
 
 export interface User {
