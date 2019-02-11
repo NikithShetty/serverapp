@@ -11,6 +11,10 @@ module.exports = (sequelize:any, Sequelize:any) => {
     email: {
       type: Sequelize.STRING,
       allowNull: false
+    },
+    password: {
+      type: Sequelize.STRING,
+      allowNull: false
     }
   });
   return User;
@@ -20,4 +24,5 @@ export interface User {
   id?: String
   , name?: String
   , email: String
+  , password: String
 }
